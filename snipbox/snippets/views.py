@@ -37,3 +37,8 @@ class Snippet(viewsets.ViewSet):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+        snippet = get_object_or_404(Snippet, pk=pk, user=request.user)
+        snippet.delete()
+        return self.list(request)
