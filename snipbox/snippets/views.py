@@ -29,3 +29,11 @@ class Snippet(viewsets.ViewSet):
         snippet = get_object_or_404(Snippet, pk=pk, user=request.user)
         serializer = SnippetSerializer(snippet)
         return Response(serializer.data)
+
+    def update(self, request, pk=None):
+        snippet = get_object_or_404(Snippet, pk=pk, user=request.user)
+        serializer = SnippetSerializer(snippet, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

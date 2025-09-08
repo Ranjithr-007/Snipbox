@@ -18,3 +18,13 @@ class SnippetSerializer(serializers.ModelSerializer):
         print(tag_data)
         tag, created= Tag.objects.get_or_create(title=tag_data['title'])
         return Snippet.objects.create(tag=tag, **validated_data)
+
+    def update(self, instance, validated_data): 
+        tag_data = validated_data.pop('tag', None)
+        if tag_data:
+            tag, created = Tag.objects.get_or_create(title=tag_data['title'])
+            instance.tag = tag
+        instance.title = validated_data.get('title', instance.title)
+        instance.note = validated_data.get('note', instance.note)
+        instance.save()
+        return instance
