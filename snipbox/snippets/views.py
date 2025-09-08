@@ -48,3 +48,14 @@ class TagList(generics.ListAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class TagDetailView(generics.RetrieveAPIView):
+    serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, pk):
+        tag = get_object_or_404(Tag, pk=pk)
+        snippets = Snippet.objects.filter(tag=tag, user=request.user)
+        serializer = SnippetSerializer(snippets, many=True)
+        return Response(serializer.data)
