@@ -3,5 +3,5 @@ from .views import SnippetView
 
 
 urlpatterns = [
-    path('snippets/', SnippetView.as_view(), name='snippet'),
+    path('snippets/', Snippet.as_view({'post': 'create'}), name='snippet'),
 ]
