@@ -3,6 +3,7 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from .models import Snippet, Tag
 from .serializers import SnippetSerializer
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -23,3 +24,8 @@ class Snippet(viewsets.ViewSet):
             serializer.save(user=request.user)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None):
+        snippet = get_object_or_404(Snippet, pk=pk, user=request.user)
+        serializer = SnippetSerializer(snippet)
+        return Response(serializer.data)
