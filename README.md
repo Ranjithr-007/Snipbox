@@ -11,9 +11,23 @@ SnipBox is a simple backend API for saving short text snippets with tags, built 
   
 ---
 
-## 1. Clone the Repository
+## Clone the Repository
 
 ```bash
 git clone https://github.com/Ranjithr-007/Snipbox.git
 cd snipbox
+```
+
+## Create env
+
+Create a .env file in the root directory
+
+```
+snipbox/
+├── snippets/           # App for snippet logic
+├── snipbox/            # Main Django project
+├── requirements.txt
+├── .env
+├── README.md
+
 ```
